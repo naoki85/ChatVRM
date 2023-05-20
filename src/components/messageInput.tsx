@@ -18,6 +18,12 @@ export const MessageInput = ({
   onClickMicButton,
   onClickSendButton,
 }: Props) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing || e.key !== 'Enter') return;
+    // @ts-ignore
+    onClickSendButton(e);
+  }
+
   return (
     <div className="absolute bottom-0 z-20 w-screen">
       <div className="bg-base text-black">
@@ -37,6 +43,7 @@ export const MessageInput = ({
               disabled={isChatProcessing}
               className="bg-surface1 hover:bg-surface1-hover focus:bg-surface1 disabled:bg-surface1-disabled disabled:text-primary-disabled rounded-16 w-full px-16 text-text-primary typography-16 font-M_PLUS_2 font-bold disabled"
               value={userMessage}
+              onKeyDown={handleKeyDown}
             ></input>
 
             <IconButton
